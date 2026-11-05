@@ -5,13 +5,20 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class App {
     public static void main(String[] args) {
-        // Load the Spring IoC container from beansConfig.xml
         ApplicationContext context = new ClassPathXmlApplicationContext("beansConfig.xml");
 
-        // Retrieve the student bean managed by Spring
-        Student student = context.getBean("student", Student.class);
+        // Get the School bean
+        School school = context.getBean(School.class);
 
-        // Print the student details (populated via setter/property injection from XML)
-        student.getDetails();
+        System.out.println("School Name: " + school.getSchoolName());
+        System.out.println("--- Students List ---");
+
+        // Loop through the List of injected Student beans
+        for (Student s : school.getStudents()) {
+            System.out.println("ID: " + s.getId());
+            System.out.println("Name: " + s.getName());
+            System.out.println("City: " + s.getAddress().getCity());
+            System.out.println("Country: " + s.getAddress().getCountry());
+        }
     }
 }
